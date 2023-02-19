@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+Tables
+{% endblock %}
+
+{% block content %}
+<h1>Premier League Table</h1>
+<table class="table table-hover table-dark">
+    <thead>
+    <tr>
+        <!-- Your Columns HERE -->
+        <th scope="col">Pos</th>
+        <th scope="col">Team</th>
+        <th scope="col">P</th>
+        <th scope="col">W</th>
+        <th scope="col">D</th>
+        <th scope="col">L</th>
+        <th scope="col">GD</th>
+        <th scope="col">PTS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Your rows inside the table HERE: -->
+    {% for table in table %}
+    <tr>
+        <td>{{ table.id }}</td>
+        <td>{{ table.team }}</td>
+        <td>{{ table.played }}</td>
+        <td>{{ table.W }}</td>
+        <td>{{ table.D }}</td>
+        <td>{{ table.L }}</td>
+        <td>{{ table.GD}}</td>
+        <td>{{ table.PTS }}</td>
+<!--        <td>-->
+<!--            <button class="btn btn-outline btn-info">Stats</button>-->
+<!--        </td>-->
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
