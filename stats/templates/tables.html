@@ -21,16 +21,16 @@ Tables
     </thead>
     <tbody>
     <!-- Your rows inside the table HERE: -->
-    {% for table in table %}
+    {% for t in table %}
     <tr>
-        <td>{{ table.id }}</td>
-        <td>{{ table.team }}</td>
-        <td>{{ table.played }}</td>
-        <td>{{ table.W }}</td>
-        <td>{{ table.D }}</td>
-        <td>{{ table.L }}</td>
-        <td>{{ table.GD}}</td>
-        <td>{{ table.PTS }}</td>
+        <td>{{ t + 1 }}</td>
+        <td>{{table[t].Team}}</td>
+        <td>{{ table[t].Played }}</td>
+        <td>{{ table[t].W }}</td>
+        <td>{{ table[t].D }}</td>
+        <td>{{ table[t].L }}</td>
+        <td>{{ table[t].GD}}</td>
+        <td>{{ table[t].PTS }}</td>
 <!--        <td>-->
 <!--            <button class="btn btn-outline btn-info">Stats</button>-->
 <!--        </td>-->

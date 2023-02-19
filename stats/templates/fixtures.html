@@ -9,7 +9,7 @@ Fixtures
     <thead>
     <tr>
         <!-- Your Columns HERE -->
-        <th scope="col">Premier League</th>
+        <th scope="col">Fixtures</th>
         <th scope="col"></th>
         <!--        <th scope="col"> Away</th>-->
         <!--        <th scope="col">Options</th>-->
@@ -17,11 +17,13 @@ Fixtures
     </thead>
     <tbody>
     <!-- Your rows inside the table HERE: -->
-    {% for game in games %}
+    {% for g in games %}
     <tr>
-        <td>{{ game.home }}</td>
+<!--        <td>{{ games[g].Date }}</td>-->
+        <td>{{ games[g].Div }}</td>
+        <td>{{ games[g].HomeTeam }}</td>
         <td>v</td>
-        <td>{{ game.away }}</td>
+        <td>{{ games[g].AwayTeam }}</td>
         <td>
             <button class="btn btn-outline btn-info">Stats</button>
         </td>
