@@ -1,6 +1,32 @@
 from stats import pd
 
 
+def btts_table(cntry, div, year, sort="Total %", num_games=None):
+    df = pd.read_csv(f'https://www.football-data.co.uk/mmz4281/{year - 1}{year}/{cntry}{div}.csv')
+    def conditions(s):
+        if (s['FTHG'] > 0) and (s['FTAG'] > 0):
+            return 1
+        else:
+            return 0
+
+    table = []
+    teams = df.HomeTeam.unique()
+    df['BTTS'] = df.apply(conditions, axis=1)
+    if num_games == None:
+        num_games = len(teams) - 1
+
+    for team in teams:
+        home_filt = df[df['HomeTeam'] == team].tail(num_games)
+        away_filt = df[df['AwayTeam'] == team].tail(num_games)
+        played = len(home_filt) + len(away_filt)
+        btts_hm = round(home_filt['BTTS'].mean(), 2) * 100
+        btts_aw = round(away_filt['BTTS'].mean(), 2) * 100
+        total = round(((home_filt['BTTS'].sum() + away_filt['BTTS'].sum()) / played), 2) * 100
+
+        table.append([team, played, round(btts_hm), round(btts_aw), round(total)])
+
+    league = pd.DataFrame(table, columns=["Team", "Played", "Home %", "Away %", "Total %"])
+    return league.sort_values(by=[sort], ascending=False).reset_index(drop=True).to_dict('index')
 
 
 def league_table(cntry, div, year, full=False, num_games=None):
@@ -36,7 +62,7 @@ def league_table(cntry, div, year, full=False, num_games=None):
         away_points = (away_wins * 3) + away_draws
         points = home_points + away_points
         if full == False:
-            table.append([team, played, total_win, total_draw, total_loss, total_for, total_ang, gl_dif, points])
+            table.append([team, played, total_win, total_draw, total_loss, gl_dif, points])
         elif full == "All":
             table.append([team, len(home_filt), home_wins, home_draws, home_loss, home_for, home_ang,
                           home_points, len(away_filt), away_wins, away_draws, away_loss, away_for, away_ang,
@@ -49,8 +75,8 @@ def league_table(cntry, div, year, full=False, num_games=None):
                           away_points])
 
     if full == False:
-        league = pd.DataFrame(table, columns=["Team", "Played", "W", "D", "L", "GF", "GA", "GD", "PTS"])
-        return league.sort_values(by=["PTS", "GD", "GF"], ascending=False).reset_index(drop=True).to_dict('index')
+        league = pd.DataFrame(table, columns=["Team", "Played", "W", "D", "L", "GD", "PTS"])
+        return league.sort_values(by=["PTS", "GD"], ascending=False).reset_index(drop=True).to_dict('index')
     elif full == "All":
         league = pd.DataFrame(table,
                               columns=["Team", "Home", "HW", "HD", "HL", "HGF", "HGA", "H-PTS", "Away", "AW", "AD",
