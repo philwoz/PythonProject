@@ -22,4 +22,8 @@ def tables_page(cntry='E023'):
 @app.route('/btts/<cntry>')
 def btts_page(cntry='E023'):
     return render_template('btts.html', table=btts_table(cntry[0], cntry[1], int(cntry[-2:])))
+#
+# @app.route('/stats/<game>')
+# def stats_page():
+#     return render_template('stats.html')
 
